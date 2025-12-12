@@ -23,8 +23,10 @@ import org.apache.shenyu.admin.model.vo.NamespaceVO;
 import org.apache.shenyu.admin.register.ShenyuClientServerRegisterPublisher;
 import org.apache.shenyu.admin.service.NamespaceService;
 import org.apache.shenyu.admin.utils.ShenyuResultMessage;
+import org.apache.shenyu.common.constant.Constants;
 import org.apache.shenyu.register.common.dto.ApiDocRegisterDTO;
 import org.apache.shenyu.register.common.dto.DiscoveryConfigRegisterDTO;
+import org.apache.shenyu.register.common.dto.McpToolsRegisterDTO;
 import org.apache.shenyu.register.common.dto.MetaDataRegisterDTO;
 import org.apache.shenyu.register.common.dto.URIRegisterDTO;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +59,9 @@ public class ShenyuClientHttpRegistryController {
     @PostMapping("/register-metadata")
     @ResponseBody
     public String registerMetadata(@RequestBody final MetaDataRegisterDTO metaDataRegisterDTO) {
-        checkClientNamespaceExist(metaDataRegisterDTO.getNamespaceId());
+        if (Objects.isNull(metaDataRegisterDTO.getNamespaceId())) {
+            metaDataRegisterDTO.setNamespaceId(Constants.SYS_DEFAULT_NAMESPACE_ID);
+        }
         publisher.publish(metaDataRegisterDTO);
         return ShenyuResultMessage.SUCCESS;
     }
@@ -71,7 +75,9 @@ public class ShenyuClientHttpRegistryController {
     @PostMapping("/register-uri")
     @ResponseBody
     public String registerURI(@RequestBody final URIRegisterDTO uriRegisterDTO) {
-        checkClientNamespaceExist(uriRegisterDTO.getNamespaceId());
+        if (Objects.isNull(uriRegisterDTO.getNamespaceId())) {
+            uriRegisterDTO.setNamespaceId(Constants.SYS_DEFAULT_NAMESPACE_ID);
+        }
         publisher.publish(uriRegisterDTO);
         return ShenyuResultMessage.SUCCESS;
     }
@@ -98,8 +104,26 @@ public class ShenyuClientHttpRegistryController {
     @PostMapping("/register-discoveryConfig")
     @ResponseBody
     public String registerDiscoveryConfig(@RequestBody final DiscoveryConfigRegisterDTO discoveryConfigRegisterDTO) {
-        checkClientNamespaceExist(discoveryConfigRegisterDTO.getNamespaceId());
+        if (Objects.isNull(discoveryConfigRegisterDTO.getNamespaceId())) {
+            discoveryConfigRegisterDTO.setNamespaceId(Constants.SYS_DEFAULT_NAMESPACE_ID);
+        }
         publisher.publish(discoveryConfigRegisterDTO);
+        return ShenyuResultMessage.SUCCESS;
+    }
+
+    /**
+     * registerMcpTools.
+     *
+     * @param mcpToolsRegisterDTO mcpToolsRegisterDTO
+     * @return String
+     */
+    @PostMapping("/register-mcp")
+    @ResponseBody
+    public String registerMcpTools(@RequestBody final McpToolsRegisterDTO mcpToolsRegisterDTO) {
+        if (Objects.isNull(mcpToolsRegisterDTO.getNamespaceId())) {
+            mcpToolsRegisterDTO.setNamespaceId(Constants.SYS_DEFAULT_NAMESPACE_ID);
+        }
+        publisher.publish(mcpToolsRegisterDTO);
         return ShenyuResultMessage.SUCCESS;
     }
 
@@ -112,7 +136,9 @@ public class ShenyuClientHttpRegistryController {
     @PostMapping("/offline")
     @ResponseBody
     public String offline(@RequestBody final URIRegisterDTO offlineDTO) {
-        checkClientNamespaceExist(offlineDTO.getNamespaceId());
+        if (Objects.isNull(offlineDTO.getNamespaceId())) {
+            offlineDTO.setNamespaceId(Constants.SYS_DEFAULT_NAMESPACE_ID);
+        }
         publisher.publish(offlineDTO);
         return ShenyuResultMessage.SUCCESS;
     }

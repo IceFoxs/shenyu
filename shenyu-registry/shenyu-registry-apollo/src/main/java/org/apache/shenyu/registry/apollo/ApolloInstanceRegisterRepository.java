@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 /**
  * The type apollo instance register repository.
  */
-@Join
+@Join(isSingleton = false)
 public class ApolloInstanceRegisterRepository implements ShenyuInstanceRegisterRepository {
 
     private static final String APOLLO_CLUSTER = "apollo.cluster";
@@ -144,7 +144,7 @@ public class ApolloInstanceRegisterRepository implements ShenyuInstanceRegisterR
                     switch (changeEvent.getChange(key).getChangeType()) {
                         case ADDED:
                             childrenList.put(key, changeEvent.getChange(key).getNewValue());
-                            LOGGER.info("apollo instance register success: {}", changeEvent.getChange(key).getNewValue());
+                            LOGGER.info("apollo instance register add {}", changeEvent.getChange(key).getNewValue());
                             break;
                         case DELETED:
                             childrenList.remove(key);

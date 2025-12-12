@@ -124,7 +124,7 @@
             <artifactId>shiro-spring</artifactId>
             <classifier>jakarta</classifier>
             <version>${shiro.version}</version>
-            <!-- 排除仍使用了jakarta.servlet的依赖 -->
+            <!-- Exclude the dependency of jakarta.servlet that is still used -->
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
@@ -296,38 +296,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- shenyu discovery start -->
-        <dependency>
-            <groupId>org.apache.shenyu</groupId>
-            <artifactId>shenyu-discovery-etcd</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shenyu</groupId>
-            <artifactId>shenyu-discovery-zookeeper</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shenyu</groupId>
-            <artifactId>shenyu-discovery-nacos</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.shenyu</groupId>
-            <artifactId>shenyu-discovery-eureka</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.servlet</groupId>
-                    <artifactId>servlet-api</artifactId>
-                </exclusion>
-            </exclusions>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- shenyu discovery end -->
-
         <!-- shenyu-admin-listener start -->
         <dependency>
             <groupId>org.apache.shenyu</groupId>
@@ -370,8 +338,25 @@
             <version>${k8s-client.version}</version>
             <scope>compile</scope>
         </dependency>
+
         <!-- shenyu-admin-listener end-->
-    
+
+        <dependency>
+            <groupId>org.apache.shenyu</groupId>
+            <artifactId>shenyu-registry-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shenyu</groupId>
+            <artifactId>shenyu-client-mcp-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>

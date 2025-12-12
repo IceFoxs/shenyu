@@ -120,6 +120,9 @@ public class ShenyuClientRegisterDivideServiceImpl extends AbstractContextPathRe
                 .collect(Collectors.toList());
         final List<DivideUpstream> needToRemove = buildDivideUpstreamList(validUriList);
         List<DivideUpstream> existList = GsonUtils.getInstance().fromCurrentList(selectorDO.getHandle(), DivideUpstream.class);
+        if (CollectionUtils.isEmpty(existList)) {
+            return Constants.SUCCESS;
+        }
         existList.removeAll(needToRemove);
         final String handler = GsonUtils.getInstance().toJson(existList);
         selectorDO.setHandle(handler);
@@ -136,7 +139,7 @@ public class ShenyuClientRegisterDivideServiceImpl extends AbstractContextPathRe
         for (DivideUpstream divideUpstream : needToRemove) {
             removeDiscoveryUpstream(selectorDO.getId(), divideUpstream.getUpstreamUrl());
         }
-        DiscoverySyncData discoverySyncData = fetch(selectorDO.getId(), selectorDO.getName(), pluginName, selectorDO.getNamespaceId());
+        DiscoverySyncData discoverySyncData = fetch(selectorDO.getId(), selectorDO.getSelectorName(), pluginName, selectorDO.getNamespaceId());
         getEventPublisher().publishEvent(new DataChangedEvent(ConfigGroupEnum.DISCOVER_UPSTREAM, DataEventTypeEnum.UPDATE, Collections.singletonList(discoverySyncData)));
     }
 

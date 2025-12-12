@@ -66,7 +66,17 @@ public enum RpcTypeEnum {
     /**
      * grpc.
      */
-    GRPC("grpc", true);
+    GRPC("grpc", true),
+
+    /**
+     * ai.
+     */
+    AI("ai", true),
+
+    /**
+     * mcp.
+     */
+    MCP("mcp", true);
 
     private final String name;
 
